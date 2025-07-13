@@ -14,7 +14,7 @@ function UseAgeTrack() {
     const { user } = useUser();
     const { totalUsage, setTotalUsage } = React.useContext(TotalUsageContext);
     const { userSubscriptions, setUserSubscriptions } = React.useContext(UserSubscriptionsContext);
-    const {updateUsageCredits, setUpdateUsageCredits } = React.useContext(UpdateUsageCreditsContext);
+    const { updateUsageCredits, setUpdateUsageCredits } = React.useContext(UpdateUsageCreditsContext);
     const [maxWindth, setMaxWindth] = useState(10000);
     useEffect(() => {
         user && GetData();
@@ -22,19 +22,29 @@ function UseAgeTrack() {
     }, [user]);
 
     useEffect(() => {
-       user && GetData();
-    },[updateUsageCredits&&user])
+        user && GetData();
+    }, [updateUsageCredits && user])
     const GetData = async () => {
-        {/* @ts-ignore */ }
+        const email = user?.primaryEmailAddress?.emailAddress;
 
-        const result: HISTORY[] = await db.select().from(AIOutput)
-            .where(eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress));
+        if (!email) return; // 🛑 stop if email is undefined
+        {/* @ts-ignore */ }
+        const result: HISTORY[] = await db
+            .select()
+            .from(AIOutput)
+            .where(eq(AIOutput.createdBy, email)); // ✅ email is definitely string now
+
         GetTotalUsage(result);
     };
+
     const isUserSubscribe = async () => {
-        let result = await db.select().from(UserSubscription).where(eq(UserSubscription.email, user?.primaryEmailAddress?.emailAddress));
-       console.log("result", result);
-       console.log("userSubscriptions", userSubscriptions.email);
+        const email = user?.primaryEmailAddress?.emailAddress;
+
+        if (!email) return; // 🛑 stop if email is undefined
+        {/* @ts-ignore */ }
+        let result = await db.select().from(UserSubscription).where(eq(UserSubscription.email, email));
+        console.log("result", result);
+        console.log("userSubscriptions", userSubscriptions.email);
         if (result) {
             setUserSubscriptions(true);
             setMaxWindth(1000000)

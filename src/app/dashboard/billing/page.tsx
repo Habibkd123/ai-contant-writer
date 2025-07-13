@@ -89,6 +89,10 @@ export default function PricingPage() {
 
 
   const SaveSubscribtions = async (paymentId: string) => {
+      const email = user?.primaryEmailAddress?.emailAddress;
+
+  if (!email) return; // 🛑 stop if email is undefined
+ {/* @ts-ignore */ }
     const result = await db.insert(UserSubscription).values(
       {
         paymentId: paymentId,
