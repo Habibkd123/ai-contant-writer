@@ -105,7 +105,7 @@ export default function PricingPage() {
     console.log("result", result);
   }
   return (
-    <div className="min-h-screen bg-[#f3f5fb] px-4 py-12 flex flex-col items-center ">
+    <div className="min-h-screen bg-background text-foreground px-4 py-12 flex flex-col items-center ">
       <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
       <h1 className="text-3xl md:text-4xl font-semibold text-center mb-12">
@@ -116,7 +116,7 @@ export default function PricingPage() {
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="flex-1 bg-white rounded-xl shadow-md border border-gray-300 p-6 flex flex-col justify-between"
+            className="flex-1 bg-background text-foreground rounded-xl shadow-md border border-gray-300 p-6 flex flex-col justify-between"
           >
             <div>
               <h2 className="text-xl font-semibold mb-1">{plan.title}</h2>

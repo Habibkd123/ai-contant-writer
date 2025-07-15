@@ -1,7 +1,9 @@
+"use client"
 import Link from 'next/link'
 import { ArrowRight, Check, Star, Zap, Brain, FileText, Sparkles, Clock, Users, Shield, Play, ChevronRight } from 'lucide-react'
-
+import { UserButton, useUser } from "@clerk/nextjs";
 export default function ContentGeneratorLanding() {
+  const { isSignedIn } = useUser();
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-slate-900">
       {/* Navigation */}
@@ -14,7 +16,7 @@ export default function ContentGeneratorLanding() {
               </div>
               <span className="text-xl font-bold text-white">ContentAI</span>
             </div>
-            
+
             <div className="hidden md:flex items-center space-x-8">
               <Link href="#features" className="text-gray-300 hover:text-white transition-colors">
                 Features
@@ -29,12 +31,25 @@ export default function ContentGeneratorLanding() {
                 Examples
               </Link>
             </div>
-            
+
+            {/* Right - Auth + CTA */}
             <div className="flex items-center space-x-4">
-              <Link href="/login" className="text-gray-300 hover:text-white transition-colors">
-                Sign In
-              </Link>
-              <Link href="/signup" className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-colors">
+              {isSignedIn ? (
+                <>
+                <UserButton  />
+                <Link href="/dashboard" className="text-gray-300 hover:text-white transition duration-200">
+                  Dashboard
+                </Link>
+                </>
+              ) : (
+                <Link href="/sign-in" className="text-gray-300 hover:text-white transition duration-200">
+                  Sign In
+                </Link>
+              )}
+              <Link
+                href="/sign-up"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg shadow hover:from-blue-600 hover:to-purple-700 transition duration-200"
+              >
                 Try Free
               </Link>
             </div>
@@ -50,31 +65,31 @@ export default function ContentGeneratorLanding() {
               <Sparkles className="w-4 h-4 mr-2" />
               Powered by Advanced AI • Generate in Seconds
             </div>
-            
+
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Create Amazing
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> Content</span>
               <br />
               in Seconds with AI
             </h1>
-            
+
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Transform your ideas into compelling blog posts, marketing copy, social media content, 
+              Transform your ideas into compelling blog posts, marketing copy, social media content,
               and more with our advanced AI content generator. Write 10x faster than ever before.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 flex items-center">
                 Generate Content Now
                 <ArrowRight className="w-5 h-5 ml-2" />
               </button>
-              
+
               <button className="flex items-center text-white border border-white/20 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/10 transition-colors">
                 <Play className="w-5 h-5 mr-2" />
                 Watch Demo
               </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-400 mb-2">10x</div>
@@ -104,7 +119,7 @@ export default function ContentGeneratorLanding() {
               From blog posts to ad copy, our AI creates high-quality content for every need
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
@@ -179,7 +194,7 @@ export default function ContentGeneratorLanding() {
               Advanced AI technology meets intuitive design for the ultimate content creation experience
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -240,7 +255,7 @@ export default function ContentGeneratorLanding() {
               Choose the plan that fits your content creation needs
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
@@ -297,7 +312,7 @@ export default function ContentGeneratorLanding() {
                     Most Popular
                   </div>
                 )}
-                
+
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
                   <p className="text-gray-300 mb-4">{plan.description}</p>
@@ -306,7 +321,7 @@ export default function ContentGeneratorLanding() {
                     <span className="text-lg text-gray-400 font-normal">/{plan.period}</span>
                   </div>
                 </div>
-                
+
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center text-gray-300">
@@ -315,12 +330,11 @@ export default function ContentGeneratorLanding() {
                     </li>
                   ))}
                 </ul>
-                
-                <button className={`w-full py-3 rounded-lg font-semibold transition-all ${
-                  plan.popular 
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700' 
-                    : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
-                }`}>
+
+                <button className={`w-full py-3 rounded-lg font-semibold transition-all ${plan.popular
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700'
+                  : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
+                  }`}>
                   Start Free Trial
                 </button>
               </div>
@@ -340,7 +354,7 @@ export default function ContentGeneratorLanding() {
               Real examples of content generated by our AI
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               <div className="flex items-center mb-4">
@@ -352,7 +366,7 @@ export default function ContentGeneratorLanding() {
                 <p className="text-sm">Email marketing continues to be one of the highest-ROI channels for businesses. In this comprehensive guide, we'll explore ten actionable strategies that can help you maximize your email marketing return on investment...</p>
               </div>
             </div>
-            
+
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               <div className="flex items-center mb-4">
                 <Sparkles className="w-6 h-6 text-blue-400 mr-2" />
@@ -403,7 +417,7 @@ export default function ContentGeneratorLanding() {
                 The most advanced AI content generator for creating high-quality content in seconds.
               </p>
             </div>
-            
+
             <div>
               <h4 className="text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-2">
@@ -413,7 +427,7 @@ export default function ContentGeneratorLanding() {
                 <li><Link href="#" className="text-gray-300 hover:text-white transition-colors">Integrations</Link></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="text-white font-semibold mb-4">Resources</h4>
               <ul className="space-y-2">
@@ -423,7 +437,7 @@ export default function ContentGeneratorLanding() {
                 <li><Link href="#" className="text-gray-300 hover:text-white transition-colors">Examples</Link></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2">
@@ -434,7 +448,7 @@ export default function ContentGeneratorLanding() {
               </ul>
             </div>
           </div>
-          
+
           <div className="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2024 ContentAI. All rights reserved.</p>
           </div>

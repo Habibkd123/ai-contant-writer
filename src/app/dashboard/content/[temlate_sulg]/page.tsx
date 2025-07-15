@@ -20,17 +20,19 @@ import { useParams, useRouter } from "next/navigation";
 
 
 const Page = () => {
-    const {template_slug}=useParams()
+  const { temlate_sulg } = useParams();
+  const router = useRouter()
+  const { user } = useUser();
+  const { totalUsage } = useContext(TotalUsageContext);
+  const { userSubscriptions } = useContext(UserSubscriptionsContext);
+  const { setUpdateUsageCredits } = useContext(UpdateUsageCreditsContext);
+  
+
   const [loading, setLoading] = useState(false);
   const [aiOutPut, setAiOutPut] = useState<string>('');
-const router = useRouter()
-  const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
-  const { userSubscriptions } = useContext(UserSubscriptionsContext);
-  const { updateUsageCredits, setUpdateUsageCredits } = useContext(UpdateUsageCreditsContext);
-  const { user } = useUser();
 
   const selectedTemplate = Templates.find(
-    (item: TEMPLATE) => item.slug === template_slug
+    (item: TEMPLATE) => item.slug == temlate_sulg
   );
 
   const GenerateAIContent = async (data: any) => {
@@ -65,7 +67,7 @@ const router = useRouter()
   };
 
   return (
-    <div className='py-6 px-4'>
+    <div className='py-6 px-4 bg-background text-foreground'>
       <Link href="/dashboard">
         <Button className='bg-purple-500 hover:bg-purple-400'>
           <ArrowLeft className='w-6 h-6 mr-0' /> Back

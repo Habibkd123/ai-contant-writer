@@ -29,7 +29,7 @@ const HistoryTable = async () => {
     .orderBy(desc(AIOutput.id));
 
   return (
-    <div className="px-6 py-8">
+    <div className="px-6 py-8 bg-background text-foreground">
       <div>
         <h2 className="text-2xl font-semibold">History</h2>
         <p className="text-sm text-muted-foreground">

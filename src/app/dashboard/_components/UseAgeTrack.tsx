@@ -61,8 +61,8 @@ function UseAgeTrack() {
         console.log("Total usage:", total);
     };
     return (
-        <div className='m-5'>
-            <div className='bg-purple-500 text-white rounded-lg p-3'>
+        <div className='m-5 bg-background text-foreground'>
+            <div className='bg-primary text-white rounded-lg p-3'>
                 <h2 className='font-medium'>Credits</h2>
                 <div className='h-2 bg-[#9981f9] w-full rounded-full'>
                     <div className='h-2 bg-white rounded-full' style={{
