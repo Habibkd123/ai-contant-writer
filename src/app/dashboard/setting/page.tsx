@@ -3,8 +3,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='flex items-center justify-center py-6 bg-background text-foreground'>
-      <UserProfile />
+    <div className='flex items-center justify-center mt-5'>
+      <UserProfile/>
     </div>
   )
 }
